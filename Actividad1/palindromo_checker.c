@@ -13,7 +13,7 @@ int es_palindromo(const char *cadena)
 
     while (inicio < fin)
     {
-        // Ignorar caracteres que no sean alfanuméricos
+        // Ignora los caracteres que no sean alfanuméricos
         if (!isalnum((unsigned char)cadena[inicio]))
         {
             inicio++;
@@ -36,7 +36,7 @@ int es_palindromo(const char *cadena)
     return 1; // Es un palíndromo
 }
 
-// Función para limpiar la cadena, eliminando caracteres no alfanuméricos y convirtiendo a minúsculas
+// Función para limpiar la cadena, eliminando caracteres no alfanuméricos y convirtiendolo a minúsculas
 void limpiar_cadena(const char *cadena_original, char *cadena_limpiada)
 {
 
@@ -45,7 +45,7 @@ void limpiar_cadena(const char *cadena_original, char *cadena_limpiada)
         // Verifica si el carácter actual es alfanumérico
         if (isalnum((unsigned char)*cadena_original))
         {
-            // Si es alfanumérico, convierte el carácter a minúsculas y lo asigna a la cadena limpiada
+            // Si es alfanumérico, convierte el carácter a minúscula y lo asigna a la cadena limpiada
             *cadena_limpiada = tolower((unsigned char)*cadena_original);
 
             cadena_limpiada++;
@@ -81,9 +81,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    char linea[MAX_CARACTERES_POR_LINEA];                  // Declaración de una cadena de caracteres para almacenar una línea de texto
-    char linea_procesada[MAX_CARACTERES_POR_LINEA];        // Declaración de otra cadena de caracteres para almacenar una línea de texto procesada
-    int cuenta_palindromos = 0, cuenta_no_palindromos = 0; // Declaración de dos variables enteras para contar la cantidad de palabras que son palíndromos y las que no lo son.
+    char linea[MAX_CARACTERES_POR_LINEA];                  // Cadena de caracteres para almacenar una línea de texto
+    char linea_procesada[MAX_CARACTERES_POR_LINEA];        // Cadena de caracteres para almacenar una línea de texto procesada
+    int cuenta_palindromos = 0, cuenta_no_palindromos = 0; // Dos variables enteras para contar la cantidad de palabras que son palíndromos y las que no lo son.
 
     while (fgets(linea, MAX_CARACTERES_POR_LINEA, archivo_entrada))
     {
