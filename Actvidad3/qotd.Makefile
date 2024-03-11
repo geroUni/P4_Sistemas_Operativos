@@ -1,23 +1,26 @@
-# Makefile para qotd.c
+# Makefile for compiling and building the qotd (Quote of the Day) program
 
-# Compilador
+# Specifies the C compiler to be used
 CC = gcc
 
-# Opciones del compilador
+# Additional compiler flags to enable warnings and enforce C99 standard
 CFLAGS = -Wall -Wextra -std=c99
 
-# Nombre del ejecutable
+# Name of the executable file
 TARGET = qotd
 
-# Archivos fuente
+# List of source files
 SRCS = qotd.c
 
+# Default goal: builds the executable file\
 all: $(TARGET)
-	@echo "¡Finalizado!"
+	@echo "Build completed successfully!"
 
+# Rule for building the executable file from the source files
 $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) -o $@ $^
 
+# Rule for cleaning up the build artifacts
 clean:
 	rm -f $(TARGET)
-	@echo "Limpieza completada"
+	@echo "Cleanup completed successfully!"
