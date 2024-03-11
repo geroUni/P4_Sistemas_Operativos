@@ -1,40 +1,23 @@
-def is\_palindrome(word):
-"""
-This function checks if a given word is a palindrome.
-A palindrome is a word that reads the same backward as forward.
-
-:param str word: The word to check for palindromeness
-:return: True if the word is a palindrome, False otherwise
-:rtype: bool
-"""
-
-# Remove any non-alphanumeric characters and convert to lowercase
-processed\_word = ''.join(c.lower() for c in word if c.isalnum()).strip()
-
-# Check if the processed word is the same as its reverse
-return processed\_word == processed\_word[::-1]
-
-
-# The following words are palindromes, meaning they read the same backward as forward:
-aibohphobia = "fear of palindromes"
-civic = "opposite of suburban"
-deified = "made a god of"
-kayak = "small boat for one person"
-level = "even and flat"
-madam = "polite term of address"
-minim = "smallest possible quantity"
-mom = "informal term for mother"
-noon = "midday"
-nun = "religious woman"
-racecar = "fast car for racing"
-radar = "object detection system"
-redder = "comparative form of red"
-refer = "to mention or allude to"
-repaper = "one who papers again"
-rotator = "something that rotates"
-rotor = "part that rotates in a machine"
-sagas = "long stories of historical or legendary times"
-solos = "performed alone"
-stats = "short for statistics"
-tenet = "a principle or belief"
-wow = "expression of wonder or amazement"
+aibohphobia
+anna
+civic
+deified
+kayak
+level
+madam
+minim
+mom
+noon
+nun
+racecar
+radar
+redder
+refer
+repaper
+rotator
+rotor
+sagas
+solos
+stats
+tenet
+wow
