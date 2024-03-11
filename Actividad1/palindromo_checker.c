@@ -3,17 +3,18 @@
 #include <ctype.h>
 #include <string.h>
 
+// Macro to define the maximum number of characters per line
 #define MAX_CARACTERES_POR_LINEA 1000
 
-// Función para verificar si una cadena es un palíndromo
+// Function to check if a string is a palindrome
 int es_palindromo(const char *cadena)
 {
-    int inicio = 0;               // Índice del inicio de la cadena
-    int fin = strlen(cadena) - 1; // Índice del final de la cadena
+    int inicio = 0;               // Index for the start of the string
+    int fin = strlen(cadena) - 1; // Index for the end of the string
 
     while (inicio < fin)
     {
-        // Ignora los caracteres que no sean alfanuméricos
+        // Skip non-alphanumeric characters
         if (!isalnum((unsigned char)cadena[inicio]))
         {
             inicio++;
@@ -25,27 +26,27 @@ int es_palindromo(const char *cadena)
             continue;
         }
 
-        // Compara los caracteres en las posiciones inicio y fin de la cadena
+        // Compare characters at the start and end of the string
         if (tolower((unsigned char)cadena[inicio]) != tolower((unsigned char)cadena[fin]))
         {
-            return 0; // No es un palíndromo
+            return 0; // Not a palindrome
         }
         inicio++;
         fin--;
     }
-    return 1; // Es un palíndromo
+    return 1; // Palindrome
 }
 
-// Función para limpiar la cadena, eliminando caracteres no alfanuméricos y convirtiendolo a minúsculas
+// Function to clean the string, removing non-alphanumeric characters and converting to lowercase
 void limpiar_cadena(const char *cadena_original, char *cadena_limpiada)
 {
 
     while (*cadena_original)
     {
-        // Verifica si el carácter actual es alfanumérico
+        // Check if the character is alphanumeric
         if (isalnum((unsigned char)*cadena_original))
         {
-            // Si es alfanumérico, convierte el carácter a minúscula y lo asigna a la cadena limpiada
+            // Convert the character to lowercase and add it to the cleaned string
             *cadena_limpiada = tolower((unsigned char)*cadena_original);
 
             cadena_limpiada++;
@@ -54,7 +55,7 @@ void limpiar_cadena(const char *cadena_original, char *cadena_limpiada)
         cadena_original++;
     }
 
-    // Al llegar al final de la cadena, se agrega el carácter nulo para marcar el final de la cadena
+    // Add null character at the end of the cleaned string
     *cadena_limpiada = '\0';
 }
 
@@ -62,49 +63,53 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        fprintf(stderr, "Uso: %s <nombre_archivo>\n", argv[0]);
-        fprintf(stderr, "Introduzca el nombre del archivo (<nombre_archivo>) que desea utilizar para verificar si las palabras u oraciones son palíndromos.\n");
-        return 1;
-    }
-    // Abre el archivo de entrada proporcionado por el primer argumento de la línea de comandos en modo lectura.
-    FILE *archivo_entrada = fopen(argv[1], "r");
-
-    // Abre un archivo nuevo llamado "palindromos.txt" en modo escritura. Este archivo se utilizará para almacenar palíndromos.
-    FILE *archivo_palindromos = fopen("palindromos.txt", "w");
-
-    // Abre un archivo nuevo llamado "not-palindromos.txt" en modo escritura. Este archivo se utilizará para almacenar palabras que no son palíndromos.
-    FILE *archivo_no_palindromos = fopen("not-palindromos.txt", "w");
-
-    if (!archivo_entrada || !archivo_palindromos || !archivo_no_palindromos)
-    {
-        perror("Error al abrir el archivo");
+        // Print usage instructions and exit with error code
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        fprintf(stderr, "Enter the filename (<filename>) to use for checking if words or phrases are palindromes.\n");
         return 1;
     }
 
-    char linea[MAX_CARACTERES_POR_LINEA];                  // Cadena de caracteres para almacenar una línea de texto
-    char linea_procesada[MAX_CARACTERES_POR_LINEA];        // Cadena de caracteres para almacenar una línea de texto procesada
-    int cuenta_palindromos = 0, cuenta_no_palindromos = 0; // Dos variables enteras para contar la cantidad de palabras que son palíndromos y las que no lo son.
+    // Open the input file provided as the first command-line argument in read mode
+    FILE *input_file = fopen(argv[1], "r");
 
-    while (fgets(linea, MAX_CARACTERES_POR_LINEA, archivo_entrada))
+    // Open a new file called "palindromes.txt" in write mode. This file will be used to store palindromes.
+    FILE *palindromes_file = fopen("palindromes.txt", "w");
+
+    // Open a new file called "not-palindromes.txt" in write mode. This file will be used to store words that are not palindromes.
+    FILE *not_palindromes_file = fopen("not-palindromes.txt", "w");
+
+    if (!input_file || !palindromes_file || !not_palindromes_file)
     {
-        limpiar_cadena(linea, linea_procesada);
-        if (es_palindromo(linea_procesada))
+        // Print error message and exit with error code
+        perror("Error opening file");
+        return 1;
+    }
+
+    char line[MAX_CARACTERES_POR_LINEA];                  // Character array to store a line of text
+    char processed_line[MAX_CARACTERES_POR_LINEA];        // Character array to store a processed line of text
+    int palindrome_count = 0, not_palindrome_count = 0; // Two integer variables to count the number of words that are palindromes and the number that are not.
+
+    while (fgets(line, MAX_CARACTERES_POR_LINEA, input_file))
+    {
+        limpiar_cadena(line, processed_line);
+        if (es_palindromo(processed_line))
         {
-            fprintf(archivo_palindromos, "%s", linea);
-            cuenta_palindromos++;
+            fprintf(palindromes_file, "%s", line);
+            palindrome_count++;
         }
         else
         {
-            fprintf(archivo_no_palindromos, "%s", linea);
-            cuenta_no_palindromos++;
+            fprintf(not_palindromes_file, "%s", line);
+            not_palindrome_count++;
         }
     }
 
-    printf("Palíndromos: %d\nNo palíndromos: %d\n", cuenta_palindromos, cuenta_no_palindromos);
+    // Print the number of palindromes and non-palindromes found
+    printf("Palindromes: %d\nNon-palindromes: %d\n", palindrome_count, not_palindrome_count);
 
-    fclose(archivo_entrada);
-    fclose(archivo_palindromos);
-    fclose(archivo_no_palindromos);
+    fclose(input_file);
+    fclose(palindromes_file);
+    fclose(not_palindromes_file);
 
     return 0;
 }
