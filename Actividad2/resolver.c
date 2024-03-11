@@ -3,7 +3,7 @@
 #include <string.h>
 #include "sudoku.h"
 
-#define MAX_LINE_LENGTH 100
+#define MAX_LONGITUD_LINEA 100
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
@@ -12,46 +12,46 @@ int main(int argc, char *argv[]) {
     }
 
     // Abrir archivo de entrada
-    FILE *input_file = fopen(argv[1], "r");
-    if (input_file == NULL) {
+    FILE *archivo_entrada = fopen(argv[1], "r");
+    if (archivo_entrada == NULL) {
         perror("Error al abrir el archivo de entrada");
         return 1;
     }
 
     // Abrir archivo de salida
-    FILE *output_file = fopen(argv[2], "w");
-    if (output_file == NULL) {
+    FILE *archivo_salida = fopen(argv[2], "w");
+    if (archivo_salida == NULL) {
         perror("Error al abrir el archivo de salida");
-        fclose(input_file);
+        fclose(archivo_entrada);
         return 1;
     }
 
     // Procesar cada rompecabezas de Sudoku del archivo de entrada
-    char line[MAX_LINE_LENGTH];
-    while (fgets(line, sizeof(line), input_file) != NULL) {
+    char linea[MAX_LONGITUD_LINEA];
+    while (fgets(linea, sizeof(linea), archivo_entrada) != NULL) {
         // Convertir la línea del archivo en un rompecabezas de Sudoku
-        int puzzle[N][N];
+        int rompecabezas[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                puzzle[i][j] = line[i * N + j] - '0';
+                rompecabezas[i][j] = linea[i * N + j] - '0';
             }
         }
 
         // Resolver el rompecabezas de Sudoku
-        sudoku_solve(puzzle, 0, 0);
+        sudoku_solve(rompecabezas, 0, 0);
 
         // Escribir la solución en el archivo de salida
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                fprintf(output_file, "%d", puzzle[i][j]);
+                fprintf(archivo_salida, "%d", rompecabezas[i][j]);
             }
         }
-        fprintf(output_file, "\n");
+        fprintf(archivo_salida, "\n");
     }
 
     // Cerrar archivos
-    fclose(input_file);
-    fclose(output_file);
+    fclose(archivo_entrada);
+    fclose(archivo_salida);
 
     printf("Se han resuelto los rompecabezas de Sudoku correctamente.\n");
 
